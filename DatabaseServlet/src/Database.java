@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Database")
 public class Database extends HttpServlet  
 {
-	static String fn,ln,cust="";
+	static String id, fn,ln,cust="";
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -32,13 +32,16 @@ public class Database extends HttpServlet
              ResultSet rs=st.executeQuery("select * from demo_customers");
  
              cust+= "<table border=1>";
-             cust+= "<tr>,<th>fl</th><th>ln</th></tr>";
+             cust+= "<tr><th>First Name</th><th>Last Name</th><th>Customer ID</th></tr>";
                  while(rs.next())
                  {
+                    id = rs.getString("CUSTOMER_ID");
                     fn = rs.getString("CUST_FIRST_NAME");
                     ln = rs.getString("CUST_LAST_NAME");
                     
-                    cust+= "<tr><td>" +fn+ "</td><td>" +ln+ "</td></tr>";
+                    
+                    cust+= "<tr><td>" +fn +"</td><td>"+ln+"</td><td>"
+                    		+ " <a href =" + "\"Details?customerid=" +id+"\"" + ">" + id +"</a>"+"</td></tr>";
                  }
                  con.close();
       
