@@ -12,7 +12,8 @@
 </head>
 <body>
 <nav class="navbar navbar-inverse">
-<a class="navbar-brand">${message}</a>
+<a class="navbar-brand">CUSTOMER DEMO</a>
 </nav>
+${message}
 </body>
 </html>

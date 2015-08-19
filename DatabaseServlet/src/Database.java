@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Database")
 public class Database extends HttpServlet  
 {
+	static String fn,ln,cust="";
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		PrintWriter pw=res.getWriter();
         res.setContentType("text/html");        
           
  
@@ -29,20 +29,27 @@ public class Database extends HttpServlet
              Statement st=con.createStatement();
              System.out.println("connection established successfully...!!");     
  
-             ResultSet rs=st.executeQuery("select * from demo_customers WHERE CUSTOMER_ID=2");
+             ResultSet rs=st.executeQuery("select * from demo_customers");
  
-             pw.println("<table border=1>");
+             cust+= "<table border=1>";
+             cust+= "<tr>,<th>fl</th><th>ln</th></tr>";
                  while(rs.next())
                  {
-                     pw.println("<tr><td>"+rs.getString("CUST_LAST_NAME") +" "+rs.getString("CUST_FIRST_NAME")+"</td></tr>");
+                    fn = rs.getString("CUST_FIRST_NAME");
+                    ln = rs.getString("CUST_LAST_NAME");
+                    
+                    cust+= "<tr><td>" +fn+ "</td><td>" +ln+ "</td></tr>";
                  }
-             pw.println("</table>");
-             pw.close();
+                 con.close();
+      
         }
         catch (Exception e){
             e.printStackTrace();
         }
  
+        req.setAttribute("message",cust);
+		getServletContext().getRequestDispatcher("/DatabaseOutput.jsp").forward(req, res);
+		
 		}
 	
     protected void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
